@@ -5,7 +5,14 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'capybara'
+require 'capybara/dsl'
+require 'webmock/rspec'
+require 'capybara/poltergeist'
+require "active_decorator/rspec"
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'dotenv'
+Dotenv.load
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -24,7 +31,19 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
-ActiveRecord::Migration.maintain_test_schema!
+# ActiveRecord::Migration.maintain_test_schema!
+POLTERGEIST_OPTIONS = {phantomjs_options: ['--load-images=no'], timeout: 60}
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+end
+
+Capybara.register_driver :iphone do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A365 Safari/600.1.4' }
+  ghost
+end
+
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

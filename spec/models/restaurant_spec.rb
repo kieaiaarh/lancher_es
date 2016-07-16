@@ -1,5 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Restaurant, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Restaurant, type: :model , elasticsearch: true do
+  it "lanch es test" do
+    expect(Restaurant.search({query:{match_all:{}}}).count).to eq 0
+  end
 end
