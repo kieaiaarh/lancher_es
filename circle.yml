@@ -10,3 +10,7 @@ machine:
       - TEST_CLUSTER_COMMAND: /usr/share/elasticsearch/bin/elasticsearch
 test:
   override:
+    - bundle exec rspec
+      parallel: true
+      files:
+        - spec/**/*_spec.rb
