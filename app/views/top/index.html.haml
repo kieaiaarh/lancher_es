@@ -1,0 +1,6 @@
+%h1 レストラン検索
+%ul
+  - @restaurants.each do |r|
+    %li
+      = r.name
+      （都道府県: #{r.pref.name}、カテゴリ: #{r.category.name}

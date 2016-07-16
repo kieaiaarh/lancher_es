@@ -24,6 +24,7 @@ GIT
       elasticsearch-transport (= 1.0.18)
     elasticsearch-api (1.0.18)
       multi_json
+    elasticsearch-dsl (0.1.4)
     elasticsearch-extensions (0.0.22)
       ansi
       ruby-prof
@@ -344,7 +345,9 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_rewinder
   dotenv-rails
+  elasticsearch-dsl!
   elasticsearch-extensions!
+  elasticsearch-model!
   elasticsearch-persistence!
   elasticsearch-rails!
   factory_girl_rails
