@@ -5,8 +5,6 @@ machine:
     Asia/Tokyo
   ruby:
     version: 2.3.0
-  environment:
-    TEST_CLUSTER_COMMAND: /usr/share/elasticsearch/bin/elasticsearch
 
 dependencies:
   pre:
