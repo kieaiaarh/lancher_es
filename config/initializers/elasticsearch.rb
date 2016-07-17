@@ -3,7 +3,7 @@ yaml   = ERB.new(erb).result
 config = YAML.load(yaml)
 
 if (option = config[Rails.env])
-  Elasticsearch::Client.new(ActiveSupport::HashWithIndifferentAccess.new(option))
+  Elasticsearch::Model.client = Elasticsearch::Client.new(ActiveSupport::HashWithIndifferentAccess.new(option))
 else
   warn 'No Elasticsearch configuration was found. Using default client.'
 end

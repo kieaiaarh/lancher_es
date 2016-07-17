@@ -4,7 +4,7 @@ machine:
   timezone:
     Asia/Tokyo
   ruby:
-    version: 2.3.1
+    version: 2.3.0
   environment:
     TEST_CLUSTER_COMMAND: /usr/share/elasticsearch/bin/elasticsearch
 

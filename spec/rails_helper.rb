@@ -9,8 +9,6 @@ require 'capybara/dsl'
 require 'webmock/rspec'
 require 'capybara/poltergeist'
 require "active_decorator/rspec"
-#require 'dotenv'
-#Dotenv.load
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -42,15 +40,52 @@ Capybara.register_driver :iphone do |app|
   ghost
 end
 
+Capybara.register_driver :ipad do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53' }
+  ghost
+end
+
+Capybara.register_driver :ipod do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (iPod touch; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53' }
+  ghost
+end
+
+Capybara.register_driver :android do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LMY47Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.93 Mobile Safari/537.36' }
+  ghost
+end
+
+Capybara.register_driver :android_tablet do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (Linux; Android 4.3; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36' }
+  ghost
+end
+
+Capybara.register_driver :windows_phone do |app|
+  ghost = Capybara::Poltergeist::Driver.new(app, POLTERGEIST_OPTIONS)
+  ghost.headers = { 'User-Agent' => 'Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; FujitsuToshibaMobileCommun; IS12T; KDDI)' }
+  ghost
+end
+
+Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.include FactoryGirl::Syntax::Methods
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
+  config.before :suite do
+    DatabaseRewinder.clean_all
+  end
+
+  config.after :suite do
+    WebMock.disable!
+  end
+
+  config.after :each do
+    DatabaseRewinder.clean
+  end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -67,8 +102,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  # Filter lines from Rails gems in backtraces.
-  config.filter_rails_from_backtrace!
-  # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
+  config.before do
+    WebMock.disable_net_connect!(allow_localhost: true)
+  end
 end
