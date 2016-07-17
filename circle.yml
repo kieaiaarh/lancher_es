@@ -1,12 +1,12 @@
 machine:
-    services:
-      - elasticsearch
-    timezone:
-      Asia/Tokyo
-    ruby:
-      version: 2.3.1
-    environment:
-      - TEST_CLUSTER_COMMAND: /usr/share/elasticsearch/bin/elasticsearch
+  services:
+    - elasticsearch
+  timezone:
+    Asia/Tokyo
+  ruby:
+    version: 2.3.1
+  environment:
+    - TEST_CLUSTER_COMMAND: /usr/share/elasticsearch/bin/elasticsearch
 
 dependencies:
   pre:
