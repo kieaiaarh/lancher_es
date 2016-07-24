@@ -5,3 +5,4 @@ development:
 test:
   host: localhost:9250
   log: true
+  # gateway: local
