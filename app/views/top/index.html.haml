@@ -1,6 +1,21 @@
 %h1 レストラン検索
-%ul
-  - @restaurants.each do |r|
-    %li
-      = r.name
-      （都道府県: #{r.pref.name}、カテゴリ: #{r.category.name}
+/ 検索フォーム
+= form_tag root_path, method: :get, enforce_utf8: false do
+  .form-group
+    = search_field_tag :q, params[:q], class: 'form-control', placeholder: '店名、場所、カテゴリ'
+  %button.btn.btn-default{:type => "submit"} 検索
+%br/
+/ 検索結果の表示
+.col-xs-9
+  #results
+    - @restaurants.each do |r|
+      %hr/
+      .result
+        %h4
+          = r.name
+          （#{r.name_kana}）
+        %p.text-muted
+          %small
+            都道府県: #{r.pref.name}
+          %small
+            カテゴリ: #{r.category.name}
