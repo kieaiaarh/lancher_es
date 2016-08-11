@@ -1,10 +1,9 @@
 ActiveRecord::Base.transaction do
   [Category, Pref, Restaurant].each(&:delete_all)
 
-  teisyoku = Category.create!(name: '定食',      name_kana: 'ていしょく')
+  teisyoku = Category.create!(name: '定食', name_kana: 'ていしょく')
   italian = Category.create!(name: 'イタリアン', name_kana: 'いたりあん')
-  izakaya = Category.create!(name: '居酒屋',    name_kana: 'いざかや')
-
+  izakaya = Category.create!(name: '居酒屋', name_kana: 'いざかや')
 
   tokyo = Pref.create!(name: '東京都')
   kanagawa = Pref.create!(name: '神奈川県')
@@ -35,5 +34,4 @@ ActiveRecord::Base.transaction do
       pref: kanagawa, category: izakaya, closed: true
     }
   ])
-
 end

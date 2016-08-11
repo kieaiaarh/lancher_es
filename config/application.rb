@@ -6,6 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# elasticsearch logging
 require 'elasticsearch/rails/instrumentation'
 module LancherEs
   class Application < Rails::Application
