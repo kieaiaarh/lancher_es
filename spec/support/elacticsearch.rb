@@ -3,7 +3,7 @@ require 'elasticsearch/extensions/test/cluster'
 RSpec.configure do |config|
   config.before(:all, :elasticsearch) do
     WebMock.disable_net_connect!(allow_localhost: true)
-    Elasticsearch::Extensions::Test::Cluster.start port: 9250, network_host: 'localhost', number_of_nodes: 1  unless Elasticsearch::Extensions::Test::Cluster.running?(on: 9250)
+    Elasticsearch::Extensions::Test::Cluster.start port: 9250, network_host: 'localhost', number_of_nodes: 1 unless Elasticsearch::Extensions::Test::Cluster.running?(on: 9250)
   end
 
   config.after(:all, :elasticsearch) do

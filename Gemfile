@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
-gem "haml-rails", "~> 0.9"
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'haml-rails', '~> 0.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'

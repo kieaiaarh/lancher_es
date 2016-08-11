@@ -26,7 +26,7 @@ class Restaurant < ApplicationRecord
 
   # インデクシング時に呼び出されるメソッド
   # マッピングのデータを返すようにする
-  def as_indexed_json(options = {})
+  def as_indexed_json(_options = {})
     attributes
       .symbolize_keys
       .slice(:name, :name_kana, :zip, :address, :closed, :created_at)
@@ -37,18 +37,18 @@ class Restaurant < ApplicationRecord
   def self.search(params = {})
     keyword = params[:q]
 
-    search_definition = Elasticsearch::DSL::Search.search {
-        query {
-          if keyword.present?
-            multi_match {
-              query keyword
-              fields %w{ name name_kana address pref.name category.name }
-            }
-          else
-            match_all
+    search_definition = Elasticsearch::DSL::Search.search do
+      query do
+        if keyword.present?
+          multi_match do
+            query keyword
+            fields %w( name name_kana address pref.name category.name )
           end
-        }
-      }
+        else
+          match_all
+        end
+      end
+    end
     __elasticsearch__.search(search_definition)
   end
 end
